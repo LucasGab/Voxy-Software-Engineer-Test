@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db_test:
+    image: postgres
+    volumes:
+      - postgres_data_test:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - DATABASE_NAME=test_db
+      - DATABASE_USER=test_admin
+      - DATABASE_PASSWORD=test_password_admin
+      - DATABASE_HOST=db_test
+      - DATABASE_PORT=5432
+      - POSTGRES_USER=test_admin
+      - POSTGRES_PASSWORD=test_password_admin
+      - POSTGRES_DB=test_db
+
+volumes:
+  postgres_data_test:

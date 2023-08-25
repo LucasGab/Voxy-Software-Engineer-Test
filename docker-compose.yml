@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    command: python voxyback/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend/:/usr/src/backend/
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+    env_file:
+      - ./backend/.env.dev
+    depends_on:
+      - db
+    networks:
+      - dev
+  
+  frontend:
+    build: ./frontend
+    expose:
+      - 3000
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/voxyfront:/app
+      - /app/node_modules
+    depends_on:
+      - db
+      - backend
+    networks:
+      - dev
+
+  db:
+    restart: always
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password_admin
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    networks:
+      - dev
+      
+volumes:
+  postgres_data:
+
+networks:
+    dev:
+      driver: bridge
