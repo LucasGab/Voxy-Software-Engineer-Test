@@ -11,7 +11,10 @@ class WordsTests(APITestCase):
             ('dsadsa', status.HTTP_201_CREATED, 1),
             ('', status.HTTP_400_BAD_REQUEST, 0),
             ('   ', status.HTTP_400_BAD_REQUEST, 0),
-            ('Teste Teds-dsa ddsad dfsadwa_dsa', status.HTTP_201_CREATED,4)
+            ('Teste Teds-dsa ddsad dfsadwa_dsa', status.HTTP_201_CREATED,2),
+            ('hello world !', status.HTTP_201_CREATED, 2),
+            ('hello world world', status.HTTP_201_CREATED, 2),
+            ('hello Hello World WORLD', status.HTTP_201_CREATED, 2)
         ]
 
         for data in testing_data:
